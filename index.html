@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- BOOTSTRAP CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- GOOGLE FONT - NUNITO SANS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap" rel="stylesheet">
+
+    <title>Time Zone</title>
+
+    <style>
+
+        body {
+            background: #BE93C5;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #BE93C5, #7BC6CC);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #BE93C5, #7BC6CC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+            font-family: 'Nunito Sans', sans-serif;
+        }
+
+    </style>
+</head>
+
+<body>
+    
+    <div class="row m-4">
+
+        <div class="col-md-12 text-center">
+
+            <h1 class="display-5 text-decoration-underline text-light mt-4 mb-5">Select A City To Know The Date & Time</h1>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <label class="form-label text-light" style="font-size: 20px;">Select A City:</label>
+
+            <select class="form-select" style="cursor: pointer;" onchange="displayDateTime(this.value)">
+                <option selected disabled>Select</option>
+                <option value="Asia/Dhaka">Dhaka</option>
+                <option value="Asia/Riyadh">Riyadh</option>
+                <option value="America/New_York">New_York</option>
+                <option value="America/Vancouver">Vancouver</option>
+                <option value="Australia/Melbourne">Melbourne</option>
+                <option value="Europe/Berlin">Berlin</option>
+                <option value="Europe/Moscow">Moscow</option>
+                <option value="Asia/Tokyo">Tokyo</option>
+            </select>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <label class="form-label text-light" style="font-size: 20px;">Date & Time:</label>
+
+            <h1 id="display_date_time" class="display-1 text-light" style="font-size: 30px;"></h1>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <label class="form-label text-light" style="font-size: 20px;">Select Format:</label>
+
+            <div class="form-check form-switch">
+
+                <label class="form-check-label text-light" for="12_hr_format" style="cursor: pointer;">12 Hour Format</label>
+
+                <input type="checkbox" id="12_hr_format" class="form-check-input" style="cursor: pointer;" onchange="changeHourFormat(this.checked)">
+                
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- BOOTSTRAP BUNDLE - JS & POPPER -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- JQUERY -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- LUXON -->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.1/build/global/luxon.min.js" integrity="sha256-BdqBGuaawDzMtW2Wn9ISUuYKUY/A7d5NVcj6Ix3jwv8=" crossorigin="anonymous"></script>
+
+    <script>
+
+        let timezone = "";
+
+        let date_time_format = "yyyy-LLLL-dd, cccc, HH:mm:ss";
+
+        function displayDateTime(value)
+        {
+            timezone = value;
+        }
+
+        function changeHourFormat(value)
+        {
+            if(value)
+            {
+                date_time_format = "yyyy-LLLL-dd, cccc, hh:mm:ss a";
+            }
+            else
+            {
+                date_time_format = "yyyy-LLLL-dd, cccc, HH:mm:ss";
+            }
+        }
+
+        let DateTime = luxon.DateTime;
+
+        setInterval(() => {
+
+            if(timezone != "")
+            {
+                let current_date_time = DateTime.now().setZone(timezone).toFormat(date_time_format);
+
+                $('#display_date_time').text(current_date_time);
+            }
+
+        }, 1000);
+
+    </script>
+
+</body>
+
+</html>
