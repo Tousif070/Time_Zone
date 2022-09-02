@@ -2,4 +2,4 @@
 ### Key points:
 * Bootstrap 5 has been used for styling
 * Luxon js has been used for displaying the date & time
-* All third party packages are installed/imported using CDNs
+* All third party packages are imported using CDNs
